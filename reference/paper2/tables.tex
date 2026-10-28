@@ -1,0 +1,184 @@
+\begin{table}[t]
+\centering
+\footnotesize
+\caption{Median over the 168 time-wise windows of each ranking method; IQR: interquartile range of the window-level Popt. SK: Scott-Knott ESD rank on window-level Popt (1 = best). PCI@20\%: share of the test commits that fall inside the first 20\% of churn; Prec@20\%: share of those commits that are defect-inducing.}
+\label{tab:p2-methods}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lrrrrrrrr}
+\toprule
+Method & Popt & IQR Popt & SK$_{\mathrm{Popt}}$ & Recall@20\% & PCI@20\% & Prec@20\% & IFA & AUC \\
+\midrule
+RF-density & 0.865 & 0.814-$-$0.912 & 1 & 0.646 & 0.797 & 0.161 & 0.0 & 0.748 \\
+MLP-density & 0.862 & 0.815-$-$0.909 & 1 & 0.658 & 0.826 & 0.161 & 1.0 & 0.719 \\
+LR-density & 0.861 & 0.816-$-$0.909 & 1 & 0.662 & 0.815 & 0.157 & 0.0 & 0.746 \\
+ManualUp & 0.860 & 0.807-$-$0.910 & 1 & 0.633 & 0.859 & 0.149 & 2.0 & 0.284 \\
+XGB-density & 0.852 & 0.807-$-$0.899 & 1 & 0.640 & 0.712 & 0.182 & 0.0 & 0.756 \\
+LGBM-density & 0.815 & 0.746-$-$0.870 & 2 & 0.565 & 0.554 & 0.222 & 0.0 & 0.754 \\
+NB-density & 0.750 & 0.686-$-$0.813 & 3 & 0.494 & 0.464 & 0.213 & 1.0 & 0.710 \\
+kNN-density & 0.718 & 0.635-$-$0.825 & 4 & 0.568 & 0.544 & 0.209 & 1.0 & 0.684 \\
+CBS+ & 0.623 & 0.562-$-$0.675 & 5 & 0.457 & 0.295 & 0.313 & 1.0 & 0.610 \\
+EALR & 0.579 & 0.476-$-$0.655 & 6 & 0.280 & 0.272 & 0.204 & 0.5 & 0.511 \\
+DT-density & 0.545 & 0.466-$-$0.665 & 6 & 0.435 & 0.350 & 0.253 & 1.0 & 0.635 \\
+MLP-prob & 0.385 & 0.286-$-$0.523 & 7 & 0.095 & 0.025 & 0.561 & 0.0 & 0.719 \\
+LGBM-prob & 0.383 & 0.277-$-$0.467 & 8 & 0.109 & 0.031 & 0.615 & 0.0 & 0.754 \\
+XGB-prob & 0.382 & 0.261-$-$0.462 & 8 & 0.107 & 0.028 & 0.658 & 0.0 & 0.756 \\
+RF-prob & 0.347 & 0.252-$-$0.409 & 9 & 0.108 & 0.029 & 0.646 & 0.0 & 0.748 \\
+NB-prob & 0.344 & 0.228-$-$0.448 & 9 & 0.069 & 0.022 & 0.511 & 0.0 & 0.710 \\
+DT-prob & 0.336 & 0.257-$-$0.404 & 9 & 0.102 & 0.030 & 0.463 & 0.0 & 0.635 \\
+kNN-prob & 0.333 & 0.236-$-$0.413 & 9 & 0.090 & 0.026 & 0.540 & 0.0 & 0.684 \\
+LR-prob & 0.303 & 0.218-$-$0.416 & 9 & 0.057 & 0.014 & 0.549 & 0.0 & 0.746 \\
+ManualDown & 0.140 & 0.090-$-$0.193 & 10 & 0.016 & 0.004 & 0.692 & 0.0 & 0.716 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\begin{table}[t]
+\centering
+\footnotesize
+\caption{RQ2.1: density ranking minus probability ranking for each classifier (mean paired difference over 168 windows), Holm-adjusted Wilcoxon signed-rank $p$ over the eight classifiers per metric, the matched-pairs rank-biserial $r_{rb}$ for Popt, and proj.: the number of projects (of six) whose median paired Popt difference favours density ranking.}
+\label{tab:p2-rq1}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lrrrrrrrrrr}
+\toprule
+Clf & $\Delta$Popt & $p_H$ (Popt) & $r_{rb}$ & proj. & $\Delta$R@20 & $p_H$ (R@20) & $\Delta$PCI@20 & $p_H$ (PCI@20) & $\Delta$P@20 & $p_H$ (P@20) \\
+\midrule
+LR & +0.545 & <0.001 & +1.00 & 6/6 & +0.603 & <0.001 & +0.778 & <0.001 & $-$0.391 & <0.001 \\
+NB & +0.410 & <0.001 & +1.00 & 6/6 & +0.443 & <0.001 & +0.452 & <0.001 & $-$0.331 & <0.001 \\
+DT & +0.228 & <0.001 & +1.00 & 6/6 & +0.325 & <0.001 & +0.308 & <0.001 & $-$0.291 & <0.001 \\
+RF & +0.512 & <0.001 & +1.00 & 6/6 & +0.539 & <0.001 & +0.740 & <0.001 & $-$0.464 & <0.001 \\
+LGBM & +0.425 & <0.001 & +1.00 & 6/6 & +0.459 & <0.001 & +0.495 & <0.001 & $-$0.386 & <0.001 \\
+XGB & +0.478 & <0.001 & +1.00 & 6/6 & +0.527 & <0.001 & +0.657 & <0.001 & $-$0.450 & <0.001 \\
+kNN & +0.397 & <0.001 & +1.00 & 6/6 & +0.473 & <0.001 & +0.492 & <0.001 & $-$0.366 & <0.001 \\
+MLP & +0.441 & <0.001 & +1.00 & 6/6 & +0.508 & <0.001 & +0.698 & <0.001 & $-$0.367 & <0.001 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\begin{table}[t]
+\centering
+\footnotesize
+\caption{RQ2.2: each method minus LR-density (mean paired difference over the windows), Holm-adjusted Wilcoxon signed-rank $p$ over the eleven comparisons per metric, the matched-pairs rank-biserial $r_{rb}$ for Popt, and proj.: the number of projects (of six) whose median paired Popt difference favours the method.}
+\label{tab:p2-rq2}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lrrrrrrrrrr}
+\toprule
+Method & $\Delta$Popt & $p_H$ (Popt) & $r_{rb}$ & proj. & $\Delta$R@20 & $p_H$ (R@20) & $\Delta$PCI@20 & $p_H$ (PCI@20) & $\Delta$P@20 & $p_H$ (P@20) \\
+\midrule
+NB-density & $-$0.112 & <0.001 & $-$1.00 & 0/6 & $-$0.148 & <0.001 & $-$0.317 & <0.001 & +0.054 & <0.001 \\
+DT-density & $-$0.300 & <0.001 & $-$1.00 & 0/6 & $-$0.228 & <0.001 & $-$0.439 & <0.001 & +0.073 & <0.001 \\
+RF-density & 0.000 & 1.000 & $-$0.03 & 4/6 & $-$0.002 & 0.642 & $-$0.017 & <0.001 & +0.001 & 0.101 \\
+LGBM-density & $-$0.062 & <0.001 & $-$0.92 & 0/6 & $-$0.085 & <0.001 & $-$0.262 & <0.001 & +0.054 & <0.001 \\
+XGB-density & $-$0.012 & <0.001 & $-$0.43 & 2/6 & $-$0.016 & <0.001 & $-$0.101 & <0.001 & +0.020 & <0.001 \\
+kNN-density & $-$0.140 & <0.001 & $-$0.98 & 0/6 & $-$0.097 & <0.001 & $-$0.273 & <0.001 & +0.041 & <0.001 \\
+MLP-density & $-$0.002 & 1.000 & $-$0.03 & 3/6 & $-$0.003 & 0.642 & +0.014 & <0.001 & $-$0.005 & 0.004 \\
+EALR & $-$0.293 & <0.001 & $-$1.00 & 0/6 & $-$0.378 & <0.001 & $-$0.520 & <0.001 & +0.052 & <0.001 \\
+ManualUp & $-$0.007 & <0.001 & $-$0.39 & 1/6 & $-$0.016 & <0.001 & +0.050 & <0.001 & $-$0.011 & <0.001 \\
+ManualDown & $-$0.722 & <0.001 & $-$1.00 & 0/6 & $-$0.655 & <0.001 & $-$0.801 & <0.001 & +0.477 & <0.001 \\
+CBS+ & $-$0.242 & <0.001 & $-$1.00 & 0/6 & $-$0.215 & <0.001 & $-$0.503 & <0.001 & +0.138 & <0.001 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\begin{table}[t]
+\centering
+\footnotesize
+\caption{Exploratory review-cost model (deviation 21): each commit costs its churn plus $c_0$ LOC-equivalents of context-switch overhead ($c_0=\infty$: only the number of commits counts). Median Recall@20\% of the cost budget over the windows. Cost-aware ranking: $p/(\mathrm{churn}+c_0+1)$, the greedy rule for this cost model. Last two columns: LR cost-aware vs ManualUp, Wilcoxon $p$ with Holm over all 15 cost-aware contrasts (three per $c_0$), and the matched-pairs rank-biserial $r_{rb}$.}
+\label{tab:p2-hybrid}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lrrrrrrrrr}
+\toprule
+$c_0$ (LOC/commit) & ManualUp & ManualDown & LR-prob & LR-density & LR-cost-aware & XGB-cost-aware & PCI (LR-c.a.) & $p_H$ c.a. vs ManualUp & $r_{rb}$ \\
+\midrule
+0 & 0.633 & 0.016 & 0.057 & 0.662 & 0.662 & 0.640 & 0.815 & <0.001 & +0.41 \\
+10 & 0.543 & 0.019 & 0.065 & 0.586 & 0.589 & 0.573 & 0.720 & <0.001 & +0.65 \\
+30 & 0.389 & 0.027 & 0.081 & 0.446 & 0.490 & 0.490 & 0.526 & <0.001 & +0.88 \\
+100 & 0.198 & 0.053 & 0.130 & 0.253 & 0.389 & 0.426 & 0.299 & <0.001 & +0.99 \\
+$\infty$ & 0.110 & 0.436 & 0.443 & 0.135 & 0.443 & 0.455 & 0.200 & <0.001 & +1.00 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\begin{table}[t]
+\centering
+\footnotesize
+\caption{RQ2.3: single-threaded cost (median over 44 windows) against density-ranked Popt. Ratios are medians [interquartile ranges] of per-window ratios to LR, each window value being the median of three fits; $\Delta$Popt and $p_H$ repeat Table~\ref{tab:p2-rq2}.}
+\label{tab:p2-cost}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lrrrrrrrr}
+\toprule
+Classifier & fit (s) & fit / LR [IQR] & latency (ms/1k) & lat. / LR [IQR] & size (KB) & Popt & $\Delta$Popt vs LR & $p_H$ \\
+\midrule
+LR & 0.004 & 1.0 [1.0, 1.0] & 0.20 & 1.0 [1.0, 1.0] & 0.8 & 0.861 & -- & -- \\
+NB & 0.001 & 0.3 [0.2, 0.3] & 0.49 & 2.6 [2.3, 3.1] & 1.0 & 0.750 & $-$0.112 & <0.001 \\
+DT & 0.005 & 1.5 [0.9, 3.7] & 0.19 & 1.0 [0.9, 1.2] & 13 & 0.545 & $-$0.300 & <0.001 \\
+RF & 0.583 & 194.4 [143.4, 257.8] & 67.03 & 331.5 [273.1, 369.7] & 6260 & 0.865 & 0.000 & 1.000 \\
+LGBM & 0.187 & 43.5 [33.7, 52.6] & 24.11 & 142.1 [85.9, 238.5] & 1007 & 0.815 & $-$0.062 & <0.001 \\
+XGB & 0.167 & 39.2 [32.3, 48.8] & 4.12 & 21.8 [16.9, 40.2] & 412 & 0.852 & $-$0.012 & <0.001 \\
+kNN & 0.002 & 0.5 [0.4, 1.0] & 17.91 & 73.9 [50.2, 631.3] & 113 & 0.718 & $-$0.140 & <0.001 \\
+MLP & 0.084 & 22.6 [12.3, 37.6] & 0.53 & 2.6 [1.6, 6.0] & 80 & 0.862 & $-$0.002 & 1.000 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\begin{table}[t]
+\centering
+\footnotesize
+\caption{Equivalence and dependence checks for RQ2.2 (exploratory, deviation 31): mean paired difference to LR-density, 90\% two-stage cluster-bootstrap percentile CI (4{,}000 replicates; projects, then windows within projects), the mean of the six per-project mean differences (equal project weight), proj.\ $>0$: the number of projects (of six) whose mean paired difference is positive, and equivalence (the 90\% CI inside the bounds) at the post-hoc margin $\pm0.01$ and, as a post-hoc sensitivity check, at $\pm0.005$ Popt. With six projects the cluster CI is likely too narrow. Table~\ref{tab:p2-rq2} counts projects by the median paired difference, so its counts can differ.}
+\label{tab:p2-equiv}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lrrrrrrrrr}
+\toprule
+Method & $\Delta$Popt & 90\% CI (cluster) & Equal-weight & proj. $>0$ & Equiv. Popt & $\pm0.005$ & $\Delta$R@20 & 90\% CI (R@20) & Equiv. R@20 \\
+\midrule
+NB-density & $-$0.112 & [$-$0.128, $-$0.094] & $-$0.112 & 0/6 & no & no & $-$0.148 & [$-$0.173, $-$0.125] & no \\
+DT-density & $-$0.300 & [$-$0.366, $-$0.249] & $-$0.310 & 0/6 & no & no & $-$0.228 & [$-$0.283, $-$0.186] & no \\
+RF-density & 0.000 & [$-$0.003, +0.003] & +0.001 & 3/6 & yes & yes & $-$0.002 & [$-$0.009, +0.006] & yes \\
+LGBM-density & $-$0.062 & [$-$0.086, $-$0.033] & $-$0.055 & 0/6 & no & no & $-$0.085 & [$-$0.112, $-$0.053] & no \\
+XGB-density & $-$0.012 & [$-$0.021, +0.001] & $-$0.009 & 2/6 & no & no & $-$0.016 & [$-$0.030, +0.001] & no \\
+kNN-density & $-$0.140 & [$-$0.203, $-$0.087] & $-$0.146 & 0/6 & no & no & $-$0.097 & [$-$0.141, $-$0.060] & no \\
+MLP-density & $-$0.002 & [$-$0.006, +0.004] & 0.000 & 3/6 & yes & no & $-$0.003 & [$-$0.013, +0.010] & no \\
+EALR & $-$0.293 & [$-$0.339, $-$0.236] & $-$0.290 & 0/6 & no & no & $-$0.378 & [$-$0.440, $-$0.316] & no \\
+ManualUp & $-$0.007 & [$-$0.012, $-$0.001] & $-$0.005 & 1/6 & no & no & $-$0.016 & [$-$0.026, $-$0.004] & no \\
+ManualDown & $-$0.722 & [$-$0.756, $-$0.682] & $-$0.724 & 0/6 & no & no & $-$0.655 & [$-$0.682, $-$0.631] & no \\
+CBS+ & $-$0.242 & [$-$0.266, $-$0.214] & $-$0.243 & 0/6 & no & no & $-$0.215 & [$-$0.234, $-$0.196] & no \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\begin{table}[t]
+\centering
+\footnotesize
+\caption{Sensitivity of the two key RQ2.2 contrasts on Popt (exploratory, deviation 31): mean paired difference to LR-density over the windows of each setting, i.i.d.\ bootstrap 95\% CI, unadjusted Wilcoxon $p$ and $r_{rb}$. Label masking sets the labels of the commits of the last training months to clean, as if their defects had not yet been found. All CIs and $p$ in this table are window-level and not cluster-adjusted. Tree-size and seed variants refit only the named learner on the main windows. Learners: LR, RF and XGB in the buffer and masking runs; RF, LGBM and XGB in the ensemble-size runs; RF, XGB, LGBM and MLP in the seed runs (XGB and LGBM use no random subsampling here, so other seeds reproduce the main run exactly and their rows are omitted). $\Delta$ and its CI describe the mean; $p$ is from the signed-rank test, which concerns the location of the paired differences, so the two can disagree (e.g., XGB with 100 rounds).}
+\label{tab:p2-sens}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lrrrrrrr}
+\toprule
+Setting & $n$ & Learner$-$LR $\Delta$Popt [95\% CI] & $p$ & $r_{rb}$ & ManualUp$-$LR $\Delta$Popt [95\% CI] & $p$  & $r_{rb}$  \\
+\midrule
+main run (gap 2, mask 0, 300 trees) & 168 & $-$0.0002 [$-$0.0029, +0.0027] & 0.772 & $-$0.03 & $-$0.0071 [$-$0.0111, $-$0.0029] & <0.001 & $-$0.39 \\
+gap 0 months & 169 & +0.0002 [$-$0.0026, +0.0032] & 0.753 & +0.03 & $-$0.0085 [$-$0.0122, $-$0.0047] & <0.001 & $-$0.47 \\
+gap 6 months & 157 & $-$0.0022 [$-$0.0047, +0.0002] & 0.298 & $-$0.10 & $-$0.0081 [$-$0.0113, $-$0.0051] & <0.001 & $-$0.41 \\
+gap 12 months & 145 & +0.0007 [$-$0.0037, +0.0071] & 0.488 & $-$0.07 & $-$0.0044 [$-$0.0094, +0.0023] & <0.001 & $-$0.34 \\
+labels of last 1 training month(s) hidden & 168 & $-$0.0067 [$-$0.0103, $-$0.0033] & <0.001 & $-$0.36 & $-$0.0032 [$-$0.0070, +0.0007] & 0.014 & $-$0.22 \\
+labels of last 2 training month(s) hidden & 168 & $-$0.0153 [$-$0.0210, $-$0.0102] & <0.001 & $-$0.61 & +0.0010 [$-$0.0032, +0.0051] & 0.923 & $-$0.01 \\
+labels of last 3 training month(s) hidden & 168 & $-$0.0346 [$-$0.0427, $-$0.0274] & <0.001 & $-$0.81 & +0.0097 [+0.0045, +0.0154] & <0.001 & +0.30 \\
+RF with 50 trees/rounds & 168 & $-$0.0181 [$-$0.0233, $-$0.0130] & <0.001 & $-$0.62 & -- & -- & -- \\
+LGBM with 50 trees/rounds & 168 & +0.0031 [+0.0002, +0.0061] & 0.029 & +0.19 & -- & -- & -- \\
+XGB with 50 trees/rounds & 168 & +0.0047 [+0.0017, +0.0078] & <0.001 & +0.38 & -- & -- & -- \\
+RF with 100 trees/rounds & 168 & $-$0.0067 [$-$0.0103, $-$0.0030] & <0.001 & $-$0.34 & -- & -- & -- \\
+LGBM with 100 trees/rounds & 168 & $-$0.0064 [$-$0.0105, $-$0.0023] & <0.001 & $-$0.30 & -- & -- & -- \\
+XGB with 100 trees/rounds & 168 & +0.0030 [$-$0.0006, +0.0065] & 0.006 & +0.25 & -- & -- & -- \\
+RF, seed offset 1 & 168 & $-$0.0009 [$-$0.0037, +0.0019] & 0.520 & $-$0.06 & -- & -- & -- \\
+MLP, seed offset 1 & 168 & +0.0003 [$-$0.0029, +0.0036] & 0.368 & +0.08 & -- & -- & -- \\
+RF, seed offset 2 & 168 & $-$0.0008 [$-$0.0035, +0.0021] & 0.418 & $-$0.07 & -- & -- & -- \\
+MLP, seed offset 2 & 168 & $-$0.0004 [$-$0.0038, +0.0031] & 0.716 & +0.03 & -- & -- & -- \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

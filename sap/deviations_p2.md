@@ -1,0 +1,33 @@
+# Deviations from the frozen plan that concern Paper 2
+
+Extract of the full deviations log. Numbering is the original one; items about the other studies are omitted.
+
+18. *Design change, made before any v2 run.* The editor/reviewer concern that four companion papers on the same nine NASA datasets overlap too much led to moving Papers 2–4 onto three other public corpora: Kamei JIT for P2, Jureczko CK multi-release for P3, and AEEEM plus Zimmermann Eclipse for P4. The v2 plan is `SAP_v2.md`, hashed in `SAP_v2.sha256` before the runs. The NASA results for P2–P4 under `SAP.md` are archived in `archive_nasa/` and are not reported.
+
+19. *Addition* (P2 v2, decided after a first look at the window-level Popt medians, before any test was run). ManualUp nearly matched the best density-ranked classifiers on Popt. Following the critique of effort-aware evaluation by Huang et al. (EMSE 2019), we added two dependent variables measured at the same 20%-churn budget: PCI@20%, the share of commits a reviewer must open, and Precision@20%. They are reported as secondary and are tested with the same RQ2.2 family structure. The perf pass was rerun to record them; the other metrics are identical because seeds and windows are unchanged.
+
+20. *Clarification* (all v2). The bootstrap 95% CIs are on the mean paired difference, as in v1 (`core.stats.boot_ci`). SAP v2 wrongly said "median".
+
+21. **2026-10-22, P2, exploratory cost-model analysis (added after seeing the first v2 P2 results).** Density rankings reached the best Popt only by putting about 80% of the commits within the 20%-churn budget, at a precision below the base rate. So we added a review-cost model in which each commit costs churn + c0 LOC-equivalents, with c0 ∈ {0, 10, 30, 100, ∞}; c0 = ∞ counts commits only. Every ranking is evaluated under each cost model, together with a "cost-aware density" p/(churn + c0 + 1). This analysis is labelled exploratory in the paper. It does not change any pre-registered RQ2.1–RQ2.3 result. Runner: `run_p2_jit.py hybrid`, output `results/raw/p2jit_hybrid.csv`.
+
+22. **2026-10-22, P2, 12-month sensitivity rerun.** The first `perf12` run failed with a broken worker pool while three experiments ran at once (memory pressure). It was rerun unchanged.
+
+23. **2026-10-22, all v2, mixed-model specification aligned with the SAP.** The first P2 analysis fitted `metric ~ method + (1 | project)`. SAP v2 specifies `(1 | project/window)`. `core.stats.mixed_diff` now accepts a nested variance component (window within project), and `analysis/p2jit.py` uses it. The point estimates did not change. The p-values became smaller because the window effect is now absorbed: for ManualUp vs LR-density on Popt, p went from .302 to .001 at the time. After the data corrections of deviation 31 the values are .28 (project intercept only) and <.001 (nested). The manuscript reports the corrected model.
+
+24. **2026-10-22, P2, implementation only.** The `hybrid` and `perf12` runs were executed per project in separate in-process Python processes (`run_p2_jit.py hybrid <proj>`, `perf12 <proj>`) because the joblib/loky worker pool repeatedly failed on this Windows host (WinError 6). Results are concatenated without modification. The computations are identical.
+
+31. **2026-10-23, P2, revision round 1 (in response to `reviews/p2_round1.md`).** All changes below were made after the first results and are labelled in the manuscript; every P2 result was recomputed.
+    - *Data handling.* Exact-duplicate commits are no longer removed, because a commit stream legitimately contains identical metric vectors. Commits with identical metrics but different labels are removed from the training block of each window only; test blocks are never altered. Churn for commits with LT = 0 is LA + LD (absolute), not (LA + LD)·LT·NF = 0.
+    - *Baselines.* ManualDown and a CBS+-style ranking (balanced LR classifier, predicted-defective first, ascending churn within groups) were added. RQ2.2 therefore has 11 comparisons against LR-density instead of 9 (Holm over 11 per metric).
+    - *Measures.* IFA is computed under each ranking's own order (it was computed under the density order). The matched-pairs rank-biserial correlation replaces Cliff's delta. Share of windows with Prec@20% below the base rate was added.
+    - *Dependence and equivalence.* Added: a two-stage project/window cluster bootstrap; a random-slope mixed model and a project-only mixed model next to the planned nested model; the equal-project-weight mean; and TOST equivalence with SESOI ±0.01 Popt and ±0.01 Recall@20% (90% cluster-bootstrap interval). The SESOI was chosen after the results were known.
+    - *Sensitivity runs* (`experiments/run_p2_jit.py` modes `gap`, `mask`, `trees`, `seeds`; exploratory, unadjusted): temporal buffer 0/6/12 months; labels of the last 1/2/3 training months set to clean; RF/LGBM/XGB with 50 and 100 trees/rounds; RF/XGB/LGBM/MLP refitted with seed offsets 1 and 2; Popt on non-zero-churn commits only.
+    - *RQ2.3.* The cost run was repeated sequentially and single-threaded with nothing else running (`timing`: every 4th window, three fits per learner, latency = median of five calls), and reports medians and IQRs of per-window ratios to LR. The planned Spearman correlation over eight learners is no longer reported (n = 8 gives no useful power); it remains in `results/summary/p2jit.json`.
+    - *RQ2.4.* The 15 cost-aware contrasts (three per cost model, five cost models) form one Holm family instead of five families of three.
+
+33. **2026-10-24, P2, revision rounds 2–3 (in response to `reviews/p2_round2.md` and `reviews/p2_round3.md`; `analysis/p2jit.py`).** All additions below were made after the results were known and are labelled post hoc or exploratory in the manuscript.
+    (a) *Stricter equivalence margin.* Equivalence is also tested at ±0.005 Popt, chosen after the ±0.01 intervals had been seen.
+    (b) *Small-sample check.* A 90% t-interval (5 df) over the six project means is reported next to the cluster interval for every equivalence contrast; it does not support the Recall@20% equivalence of RF-density.
+    (c) *XGB-50 vs ManualUp.* The best ensemble-size variant (XGB-density, 50 rounds) is compared with ManualUp using the same dependence checks as RQ2.2 (cluster interval, equal-weight mean, project counts, random-slope model). It was not added to the masking runs.
+    (d) *IFA.* Holm adjustment over the eight learners.
+    (e) *Reporting.* IQRs of window-level Popt in the methods table; window-level inference is stated in the sensitivity-table caption.

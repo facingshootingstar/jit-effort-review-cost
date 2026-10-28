@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+/core/.cache/
+/results/raw/
+/results/summary/
+/paper2/
+/out/

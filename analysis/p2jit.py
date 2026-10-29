@@ -1,4 +1,4 @@
-"""Paper 2 analysis: effort-aware JIT defect prediction on time-wise windows, value vs cost."""
+"""Analysis: effort-aware JIT defect prediction on time-wise windows, value vs cost."""
 from common import *
 from scipy.stats import spearmanr
 from core.stats import scott_knott_esd, mixed_diff

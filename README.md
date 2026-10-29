@@ -1,6 +1,6 @@
 # Effort-aware just-in-time defect prediction: value vs cost — reproduction package
 
-Data and code that reproduce every number, table and figure of the paper (Paper 2): effort-aware
+Data and code that reproduce every number, table and figure of the paper: effort-aware
 just-in-time (JIT) defect prediction on 168 time-wise windows of six projects of the Kamei et al. (2013)
 corpus, comparing eight learners (LR, NB, DT, RF, LightGBM, XGBoost, kNN, MLP) under probability and
 density ranking with the training-free baselines ManualUp, ManualDown, EALR and a CBS+-style ranking,
@@ -15,7 +15,7 @@ model.
 | `core/` | Loading and cleaning (`corpora.py`), time-wise windows (`folds.py`: 6 months training, 2-month gap, 3 months test, step 3), learners (`models.py`), metrics (Popt, Recall@20%, PCI@20%, ...), statistics. Seed 20261018. |
 | `experiments/run_p2_jit.py` | Main run (`perf`) and the additional runs (`perf12`, `hybrid`, `timing`, `info`, `gap`, `mask`, `trees`, `seeds`); see the docstring. |
 | `analysis/p2jit.py` | Statistics, LaTeX tables and figures from the raw results. |
-| `sap/` | The frozen statistical analysis plan (`SAP_v2.md`, hash in `SAP_v2.sha256`; the sections *Shared* and *Paper 2* apply) and the deviations that concern this paper (`deviations_p2.md`). |
+| `sap/` | The frozen statistical analysis plan (`SAP_v2.md`, SHA-256 in `SAP_v2.sha256`). The plan was frozen for a wider project before any experiment was run and is shipped unchanged so that the hash still matches; only its *Shared* section and its section on the Kamei JIT corpus apply to this study. `deviations_p2.md` lists every deviation from the plan that concerns this study. |
 | `reference/` | The outputs of the original run: raw per-window results, `summary/p2jit.json`, `paper2/tables.tex`, figures. |
 | `repro.py` | One entry point that runs everything and compares it with `reference/`. |
 

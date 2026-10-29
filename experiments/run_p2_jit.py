@@ -1,4 +1,4 @@
-"""Paper 2: effort-aware JIT defect prediction vs cost on the Kamei corpus, time-wise windows.
+"""Experiments: effort-aware JIT defect prediction vs cost on the Kamei corpus, time-wise windows.
   python experiments/run_p2_jit.py perf    -> results/raw/p2jit_perf.csv   (parallel over windows)
   python experiments/run_p2_jit.py perf12  -> results/raw/p2jit_perf12.csv (12-month training window, exploratory)
   python experiments/run_p2_jit.py hybrid  -> results/raw/p2jit_hybrid.csv (review-cost model churn + c0, deviation 21)

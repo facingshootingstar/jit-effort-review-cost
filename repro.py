@@ -1,4 +1,4 @@
-"""Reproduce every statistic, table and figure of Paper 2 (effort-aware JIT defect prediction). See README.md.
+"""Reproduce every statistic, table and figure of the paper (effort-aware JIT defect prediction). See README.md.
 
   python repro.py check                     data manifest (SHA-256) + package versions
   python repro.py fast    [p2]              shipped raw results -> analysis -> compare with reference/
@@ -7,7 +7,7 @@
 
 FAST is exact: the analysis scripts are deterministic, so every JSON value, table and figure must match.
 FULL re-trains every model; on another OS/CPU tree learners can differ in the last digits, and the
-P2 timing/latency measurements (p2jit_cost.csv) are hardware-dependent by nature.
+timing/latency measurements (p2jit_cost.csv) are hardware-dependent by nature.
 """
 import os, sys, json, math, re, shutil, subprocess, time, pathlib, importlib.metadata as md
 
